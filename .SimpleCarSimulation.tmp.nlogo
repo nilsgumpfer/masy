@@ -231,9 +231,7 @@ to control-carbehavior
       ]
     ]
 
-    ;face-cars
-    ;fd 0
-    ;face-cars
+
     set currentSpeed lclSpeed
   ;]
 end
@@ -257,6 +255,18 @@ to process-trafficlights
   ask trafficLights
   [
     change-light
+  ]
+end
+
+to launchSlowCar
+  ask patch -14 -4
+  [
+    sprout-cars 1 ; 1 = one car
+    [
+      set heading 0 ; 0 <= number < 360, 0 is north
+      set maxSpeed slowCarSpeed ; power of car / habit of driver (random)
+      set currentSpeed slowCarSpeed ; set current speed accordingly
+    ]
   ]
 end
 
@@ -332,7 +342,7 @@ numberOfCars
 numberOfCars
 1
 50
-2.0
+7.0
 1
 1
 NIL
@@ -407,7 +417,7 @@ carDistance
 carDistance
 0
 10
-7.0
+10.0
 1
 1
 NIL
@@ -421,9 +431,41 @@ SLIDER
 detectionConeRadius
 detectionConeRadius
 1
-20
-10.0
+120
+90.0
 1
+1
+NIL
+HORIZONTAL
+
+BUTTON
+35
+607
+147
+640
+NIL
+launchSlowCar
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+35
+573
+207
+606
+slowCarSpeed
+slowCarSpeed
+0
+1
+0.24
+0.01
 1
 NIL
 HORIZONTAL
