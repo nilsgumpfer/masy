@@ -223,7 +223,8 @@ to control-carbehavior
     [
       if self != myself ; if detected car wasn´t yourself
       [
-        set lclSpeed currentSpeed ; save speed of car in front of you
+        ;set lclSpeed currentSpeed ; save speed of car in front of you
+       set lclSpeed 0.
       ]
     ]
 
