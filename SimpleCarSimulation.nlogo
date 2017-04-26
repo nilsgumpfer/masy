@@ -15,7 +15,7 @@ breed [cars car]
 breed [trafficlights trafficlight]
 
 ; Variables of car-breed
-cars-own [rounds maxSpeed currentSpeed]
+cars-own [rounds maxSpeed currentSpeed extractedValue injectedValue]
 
 ; Variables of trafficlight-breed
 trafficlights-own [nextChange nextColor]
@@ -30,9 +30,10 @@ globals [cityA cityB cityC cityD cityStart cityEnd timeForNextCar]
 ; Main method (this method is called continuously)
 to go
   make-car
-  face-cars
   process-trafficlights
+  face-cars
   move-cars
+  face-cars
   destroy-cars
   tick ; "count" further / tick further / i++
 end
@@ -203,7 +204,7 @@ end
 
 ; Method for letting cars avoid crashes
 to control-carbehavior
-  let lclSpeed maxSpeed ; local variable declaration
+  let lclSpeed currentSpeed ; local variable declaration
 
   ;ask trafficLights in-cone nm 180
   ;[
@@ -221,16 +222,19 @@ to control-carbehavior
     let carsInSight cars in-cone carDistance detectionConeRadius
     ask carsInSight
     [
-      if self != myself ; if detected car wasn´t yourself
+      if self != myself ; if detected car isn´t yourself..
       [
         ;set lclSpeed currentSpeed ; save speed of car in front of you
-       set lclSpeed 0
+        set injectedValue lclSpeed
+        set extractedValue [currentSpeed] of self
+        set lclSpeed [currentSpeed] of self
       ]
     ]
 
+    ;face-cars
+    ;fd 0
+    ;face-cars
     set currentSpeed lclSpeed
-
-
   ;]
 end
 
@@ -328,7 +332,7 @@ numberOfCars
 numberOfCars
 1
 50
-10.0
+4.0
 1
 1
 NIL
@@ -358,7 +362,7 @@ maxRounds
 maxRounds
 1
 10
-3.0
+10.0
 1
 1
 NIL
@@ -403,7 +407,7 @@ carDistance
 carDistance
 0
 10
-5.0
+7.0
 1
 1
 NIL
