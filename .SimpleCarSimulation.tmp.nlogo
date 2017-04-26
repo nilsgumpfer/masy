@@ -188,7 +188,7 @@ to move-cars
   ask cars
   [
     fd currentSpeed
-    control-carbehavior
+
   ]
 end
 
@@ -224,7 +224,7 @@ to control-carbehavior
       if self != myself ; if detected car wasn´t yourself
       [
         ;set lclSpeed currentSpeed ; save speed of car in front of you
-       set lclSpeed 0.
+       set lclSpeed 0
       ]
     ]
 
@@ -403,7 +403,7 @@ carDistance
 carDistance
 0
 10
-3.0
+5.0
 1
 1
 NIL
