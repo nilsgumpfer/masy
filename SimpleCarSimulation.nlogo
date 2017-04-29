@@ -204,7 +204,7 @@ end
 
 ; Method for letting cars avoid crashes
 to control-carbehavior
-  let lclSpeed currentSpeed ; local variable declaration
+  let lclSpeed maxSpeed ; local variable declaration
 
   ;ask trafficLights in-cone nm 180
   ;[
@@ -220,19 +220,25 @@ to control-carbehavior
   ;]
   ;[; else
 
-    let carsInSight cars in-cone carDistance detectionConeRadius
-    ask carsInSight
+  let carsInSight cars in-cone carDistance detectionConeRadius
+  ask carsInSight
+  [
+    if self != myself ; if detected car isn´t yourself..
     [
-      if self != myself ; if detected car isn´t yourself..
-      [
-        ;set lclSpeed currentSpeed ; save speed of car in front of you
-        set injectedValue lclSpeed
-        set extractedValue [currentSpeed] of self
-        set lclSpeed [currentSpeed] of self
+      ;set lclSpeed currentSpeed ; save speed of car in front of you
+      ifelse distance myself < carDistance
+      [; if
+        set lclSpeed 0
+      ]
+      [; else
+       ;set injectedValue lclSpeed
+       ;set extractedValue [currentSpeed] of self
+        set lclSpeed [currentSpeed] of self ; extracts currentSpeed from car in cone
       ]
     ]
+  ]
 
-    set currentSpeed lclSpeed
+  set currentSpeed lclSpeed
 end
 
 ; Method to toggle trafficlight
@@ -299,10 +305,10 @@ ticks
 1.0
 
 BUTTON
-45
-70
-108
-103
+133
+10
+196
+43
 Go
 go
 T
@@ -316,10 +322,10 @@ NIL
 1
 
 BUTTON
-44
-132
-108
-165
+26
+10
+90
+43
 Setup
 setup
 NIL
@@ -333,25 +339,25 @@ NIL
 1
 
 SLIDER
-20
-202
-192
-235
+26
+55
+198
+88
 numberOfCars
 numberOfCars
 1
 50
-7.0
+9.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-20
-263
-192
-296
+27
+98
+199
+131
 sproutDistance
 sproutDistance
 0
@@ -363,25 +369,25 @@ NIL
 HORIZONTAL
 
 SLIDER
-21
-316
-193
-349
+27
+141
+199
+174
 maxRounds
 maxRounds
 1
 10
-10.0
+4.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-21
-373
-193
-406
+28
+184
+200
+217
 trafficLightPeriod
 trafficLightPeriod
 0
@@ -393,10 +399,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-25
-431
-197
-464
+28
+228
+200
+261
 maxCarSpeed
 maxCarSpeed
 1
@@ -408,40 +414,40 @@ NIL
 HORIZONTAL
 
 SLIDER
-24
-488
-196
-521
+27
+271
+199
+304
 carDistance
 carDistance
 0
 10
-10.0
+6.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-28
-535
-200
-568
+27
+314
+199
+347
 detectionConeRadius
 detectionConeRadius
 1
 120
-90.0
+21.0
 1
 1
 NIL
 HORIZONTAL
 
 BUTTON
-35
-607
-147
-640
+28
+400
+140
+433
 NIL
 launchSlowCar
 NIL
@@ -455,15 +461,15 @@ NIL
 1
 
 SLIDER
-35
-573
-207
-606
+27
+356
+199
+389
 slowCarSpeed
 slowCarSpeed
 0
 1
-0.24
+0.2
 0.01
 1
 NIL
