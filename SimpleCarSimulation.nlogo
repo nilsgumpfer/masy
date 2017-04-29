@@ -226,7 +226,7 @@ to control-carbehavior
     if self != myself ; if detected car isn´t yourself..
     [
       ;set lclSpeed currentSpeed ; save speed of car in front of you
-      ifelse distance myself < carDistance
+      ifelse distance myself < carDistance - 1
       [; if
         set lclSpeed 0
       ]
@@ -347,7 +347,7 @@ numberOfCars
 numberOfCars
 1
 50
-9.0
+6.0
 1
 1
 NIL
@@ -422,7 +422,7 @@ carDistance
 carDistance
 0
 10
-6.0
+5.0
 1
 1
 NIL
@@ -437,7 +437,7 @@ detectionConeRadius
 detectionConeRadius
 1
 120
-21.0
+45.0
 1
 1
 NIL
@@ -469,7 +469,7 @@ slowCarSpeed
 slowCarSpeed
 0
 1
-0.2
+0.6
 0.01
 1
 NIL
