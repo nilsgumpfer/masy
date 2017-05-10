@@ -238,7 +238,11 @@ to control-carbehavior
     ]
   ]
 
-  set currentSpeed lclSpeed
+  ; adjust speed to recognized, but only if slower (dont speed up)
+  if lclSpeed < currentSpeed
+  [
+    set currentSpeed lclSpeed
+  ]
 end
 
 ; Method to toggle trafficlight
