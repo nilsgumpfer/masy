@@ -10,7 +10,7 @@ titfortats-own [act gain strategy lastmove]
 negtitfortats-own [act gain strategy lastmove]
 randomones-own [act gain strategy lastmove]
 
-globals [totalGainAC totalGainNC totalGainTT totalGainNTT totalGainRD totalGain]
+globals [totalGainAC relGainAC totalGainNC relGainNC totalGainTT relGainTT totalGainNTT relGainNTT totalGainRD relGainRD totalGain relGain]
 
 to-report alwaysCooperate
   report true
@@ -48,26 +48,31 @@ end
 to updateGainAC
   set totalGainAC 0
   ask coops[ set totalGainAC totalGainAC + gain ]
+  if count coops > 0 [set relGainAC totalGainAC / count coops]
 end
 
 to updateGainNC
   set totalGainNC 0
   ask noncoops[ set totalGainNC totalGainNC + gain ]
+  if count noncoops > 0 [set relGainNC totalGainNC / count noncoops]
 end
 
 to updateGainTT
   set totalGainTT 0
   ask titfortats[ set totalGainTT totalGainTT + gain ]
+  if count titfortats > 0 [set relGainTT totalGainTT / count titfortats]
 end
 
 to updateGainNTT
   set totalGainNTT 0
   ask negtitfortats[ set totalGainNTT totalGainNTT + gain ]
+  if count negtitfortats > 0 [set relGainNTT totalGainNTT / count negtitfortats]
 end
 
 to updateGainRD
   set totalGainRD 0
   ask randomones[ set totalGainRD totalGainRD + gain ]
+  if count randomones > 0 [set relGainRD totalGainRD / count randomones]
 end
 
 to updateGainTotal
@@ -137,11 +142,11 @@ end
 GRAPHICS-WINDOW
 210
 10
-647
-448
+281
+82
 -1
 -1
-13.0
+1.91
 1
 10
 1
@@ -204,7 +209,7 @@ nOfRepetitions
 nOfRepetitions
 0
 100
-31.0
+6.0
 1
 1
 NIL
@@ -289,7 +294,7 @@ nSpawnCoop
 nSpawnCoop
 0
 100
-10.0
+29.0
 1
 1
 NIL
@@ -319,20 +324,20 @@ nSpawnTittat
 nSpawnTittat
 0
 100
-10.0
+9.0
 1
 1
 NIL
 HORIZONTAL
 
 PLOT
-695
+317
 10
-1247
+869
 259
-plot 1
+Absolute scoring
 Time
-Wins
+Achieved score (sum for breed)
 0.0
 10.0
 0.0
@@ -348,10 +353,10 @@ PENS
 "RD" 1.0 0 -7500403 true "" "plot totalGainRD"
 
 MONITOR
-706
-280
-783
-325
+315
+272
+392
+317
 NIL
 totalGainTT
 17
@@ -359,10 +364,10 @@ totalGainTT
 11
 
 MONITOR
-806
-285
-885
-330
+415
+277
+494
+322
 NIL
 totalGainAC
 17
@@ -370,10 +375,10 @@ totalGainAC
 11
 
 MONITOR
-707
-350
-786
-395
+715
+278
+794
+323
 NIL
 totalGainNC
 17
@@ -381,10 +386,10 @@ totalGainNC
 11
 
 MONITOR
-815
-354
-918
-399
+816
+282
+919
+327
 Total Social Gain
 totalGain
 17
@@ -400,17 +405,17 @@ nSpawnNegTittat
 nSpawnNegTittat
 0
 20
-10.0
+14.0
 1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-136
-292
-308
-325
+112
+281
+284
+314
 nSpawnRandomOnes
 nSpawnRandomOnes
 0
@@ -422,10 +427,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-285
-455
-457
-488
+29
+513
+201
+546
 randomParameter
 randomParameter
 0
@@ -437,10 +442,10 @@ NIL
 HORIZONTAL
 
 MONITOR
-922
-288
-1007
-333
+512
+277
+597
+322
 NIL
 totalGainNTT
 17
@@ -448,15 +453,37 @@ totalGainNTT
 11
 
 MONITOR
-940
-353
-1019
-398
+608
+277
+687
+322
 NIL
 totalGainRD
 17
 1
 11
+
+PLOT
+310
+331
+878
+564
+Relative scoring (via agent count)
+Time
+Achieved score (per agent)
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"AC" 1.0 0 -10899396 true "" "plot relGainAC"
+"RD" 1.0 0 -7500403 true "" "plot relGainRD"
+"NC" 1.0 0 -2674135 true "" "plot relGainNC"
+"NTT" 1.0 0 -955883 true "" "plot relGainNTT"
+"TT" 1.0 0 -13345367 true "" "plot relGainTT"
 
 @#$#@#$#@
 ## WHAT IS IT?
